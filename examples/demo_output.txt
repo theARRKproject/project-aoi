@@ -1,0 +1,7 @@
+Project Aoi | local storage demonstration
+----------------------------------------
+Chat messages saved: 2
+Long-term notes saved: 2
+Search query: 'SQLite chat history'
+Matched note #1: Project Aoi stores its conversation history in SQLite.
+Demo complete. This mode does not load an AI model.

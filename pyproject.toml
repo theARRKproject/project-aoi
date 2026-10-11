@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "project-aoi"
+version = "0.1.0"
+description = "A research prototype for a local conversational AI with persistent memory"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{name = "Project Aoi developer"}]
+dependencies = []
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+
+[project.optional-dependencies]
+model = ["torch>=2.2", "transformers>=4.44,<5", "accelerate>=0.33"]
+semantic = ["sentence-transformers>=3.0,<6"]
+
+[project.scripts]
+aoi = "aoi.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

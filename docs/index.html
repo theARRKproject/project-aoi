@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Project Aoi: a local-first conversational AI research prototype built with Python, Qwen, SQLite and semantic memory retrieval." />
+  <meta name="theme-color" content="#0b1019" />
+  <title>Project Aoi | Local AI & Persistent Memory</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="wordmark" href="#top" aria-label="Aoi homepage"><span class="mark">A</span> PROJECT AOI</a>
+    <nav aria-label="Main navigation">
+      <a href="#about">About</a>
+      <a href="#build">How it works</a>
+      <a href="#code">Code</a>
+      <a href="#timeline">Roadmap</a>
+    </nav>
+    <!-- Replace theARRKproject with your GitHub username after publishing. -->
+    <a class="top-source" href="https://github.com/theARRKproject/project-aoi">Source on GitHub <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main id="top">
+    <section class="hero shell">
+      <div class="hero-content">
+        <p class="eyebrow"><span class="pulse"></span> RESEARCH PROTOTYPE <span class="eyebrow-sep">/</span> PYTHON · LOCAL AI · MEMORY</p>
+        <h1>Give a conversation<br /><em>a sense of history.</em></h1>
+        <p class="lead">Aoi is a personal AI project exploring local language models, a stable character personality, and memories that carry across sessions.</p>
+        <div class="hero-actions">
+          <a class="primary" href="#build">Explore the project <span aria-hidden="true">↘</span></a>
+          <a class="secondary" href="https://github.com/theARRKproject/project-aoi">View repository <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="hero-meta"><span>01 / Experiment</span><span>02 / Build</span><span>03 / Learn</span></div>
+      </div>
+      <div class="hero-visual" aria-label="Illustration of a conversation connected to stored memories">
+        <div class="visual-grid"></div>
+        <div class="core-ring ring-a"></div><div class="core-ring ring-b"></div>
+        <div class="core-glow"></div>
+        <div class="core-label"><small>AOI SYSTEM</small><strong>Memory<br />core_</strong><span>PROTOTYPE 0.1</span></div>
+        <div class="floating-label label-a"><span class="dot"></span> CHAT HISTORY <small>SQLite</small></div>
+        <div class="floating-label label-b"><span class="dot"></span> RELEVANT NOTES <small>Embeddings</small></div>
+        <div class="floating-label label-c"><span class="dot"></span> LOCAL MODEL <small>Qwen</small></div>
+      </div>
+    </section>
+
+    <div class="marquee-strip"><div class="shell strip-inner"><span>LOCAL-FIRST</span><span class="star">✳</span><span>CONVERSATIONAL AI</span><span class="star">✳</span><span>PERSISTENT MEMORY</span><span class="star">✳</span><span>OPEN DEVELOPMENT</span></div></div>
+
+    <section id="about" class="section shell">
+      <div class="section-heading"><p class="section-index">[ 01 / THE IDEA ]</p><h2>More than a chatbot.</h2><p>The aim is an assistant that has a defined voice, keeps the thread of a conversation, and uses past information when it matters. This is an experiment in connecting those pieces, not a finished product.</p></div>
+      <div class="feature-grid">
+        <article class="feature"><span class="feature-num">01</span><div class="feature-icon">⌘</div><h3>Defined personality</h3><p>A consistent character design guided by prompts and conversation examples. The private original prompt is not included in the public source.</p><span class="status status-progress">PROTOTYPED</span></article>
+        <article class="feature"><span class="feature-num">02</span><div class="feature-icon">▤</div><h3>Persistent chats</h3><p>Messages, roles, and conversation IDs are stored in a local SQLite database, then loaded as context for later replies.</p><span class="status status-done">TESTED IN REPO</span></article>
+        <article class="feature"><span class="feature-num">03</span><div class="feature-icon">◎</div><h3>Relevant memories</h3><p>Saved notes are scored against a new message so the model can receive useful context without the full history.</p><span class="status status-progress">EARLY INTEGRATION</span></article>
+      </div>
+    </section>
+
+    <section id="build" class="section shell build-section">
+      <div class="section-heading"><p class="section-index">[ 02 / UNDER THE HOOD ]</p><h2>How Aoi is built.</h2><p>Each part has one job, making it easier to test and replace as the project grows.</p></div>
+      <div class="architecture" aria-label="Six-step Aoi architecture">
+        <div class="arch-flow">
+          <div class="arch-block"><span>INPUT</span><strong>Chat message</strong><small>Terminal</small></div><div class="arch-join">→</div>
+          <div class="arch-block"><span>CONTEXT</span><strong>History + notes</strong><small>SQLite / retriever</small></div><div class="arch-join">→</div>
+          <div class="arch-block"><span>RESPONSE</span><strong>Local Qwen</strong><small>Transformers</small></div><div class="arch-join">→</div>
+          <div class="arch-block"><span>STORAGE</span><strong>Save full turn</strong><small>SQLite</small></div>
+        </div>
+        <p class="architecture-note"><strong>Core design rule:</strong> store a complete exchange only after a reply is generated. The model, memory ranking, and prompt design still need live end-to-end tests.</p>
+      </div>
+      <div class="stack"><span>TECH STACK</span><div class="stack-tags"><span>Python</span><span>PyTorch</span><span>Qwen2.5</span><span>Transformers</span><span>SQLite</span><span>SentenceTransformers</span></div></div>
+    </section>
+
+    <section id="code" class="section shell code-section">
+      <div class="section-heading"><p class="section-index">[ 03 / SOURCE SNAPSHOT ]</p><h2>What the code looks like.</h2><p>This repository reconstructs the earlier experiments into readable, modular Python. The original historical code was not available. The SQLite and keyword demo are tested; the model path is experimental.</p></div>
+      <div class="code-grid">
+        <div class="code-side"><span class="code-tab">01 / PERSISTENCE</span><h3>Keep both sides of the conversation.</h3><p>A single transaction writes the user's message and the generated reply so the database cannot save half a successful exchange.</p><a href="https://github.com/theARRKproject/project-aoi/blob/main/src/aoi/storage.py">storage.py <span aria-hidden="true">↗</span></a></div>
+        <div class="code-window"><div class="code-header"><div class="window-controls"><i></i><i></i><i></i></div><span>storage.py</span><small>PYTHON</small></div><pre><code><span class="faded"># Save only after generation succeeds</span>
+<span class="purple">with</span> self._connect() <span class="purple">as</span> connection:
+    connection.executemany(
+        <span class="green">"INSERT INTO messages ..."</span>,
+        [
+            (conversation_id, <span class="green">"user"</span>, user_text, now),
+            (conversation_id, <span class="green">"assistant"</span>, reply, now),
+        ],
+    )</code></pre></div>
+        <div class="code-side"><span class="code-tab">02 / RETRIEVAL</span><h3>Find notes that match the question.</h3><p>An optional embedding model converts the question and notes into vectors, then ranks them by similarity.</p><a href="https://github.com/theARRKproject/project-aoi/blob/main/src/aoi/retrieval.py">retrieval.py <span aria-hidden="true">↗</span></a></div>
+        <div class="code-window"><div class="code-header"><div class="window-controls"><i></i><i></i><i></i></div><span>retrieval.py</span><small>PYTHON</small></div><pre><code><span class="faded"># Normalize vectors for cosine ranking</span>
+embeddings = model.encode(
+    [query] + [m.content <span class="purple">for</span> m <span class="purple">in</span> memories],
+    normalize_embeddings=<span class="purple">True</span>,
+)
+query_vector = embeddings[<span class="orange">0</span>]
+scores = [query_vector @ vector
+          <span class="purple">for</span> vector <span class="purple">in</span> embeddings[<span class="orange">1</span>:]]</code></pre></div>
+      </div>
+    </section>
+
+    <section id="timeline" class="section shell roadmap-section">
+      <div class="section-heading"><p class="section-index">[ 04 / THE JOURNEY ]</p><h2>Work in progress.</h2><p>A clear record of what has been explored and what still needs to be built.</p></div>
+      <div class="timeline">
+        <div class="milestone"><span class="milestone-mark complete">✓</span><div><span class="milestone-state">EXPERIMENTED</span><h3>Persona and local model</h3><p>Defined the idea for Aoi's identity and tested text generation using Python and Qwen.</p></div></div>
+        <div class="milestone"><span class="milestone-mark complete">✓</span><div><span class="milestone-state">PROTOTYPED</span><h3>Chat history and memory</h3><p>Worked on SQLite conversations, timestamped messages, and semantic memory retrieval.</p></div></div>
+        <div class="milestone"><span class="milestone-mark active">•</span><div><span class="milestone-state current">CURRENT PRIORITY</span><h3>Reliable conversation loop</h3><p>Test the real model with retrieved memories, improve response quality, and keep Aoi's persona consistent.</p></div></div>
+        <div class="milestone"><span class="milestone-mark future">○</span><div><span class="milestone-state">PLANNED</span><h3>Deploy and expand</h3><p>Improve performance, develop a local server setup, then explore speech, vision, and a character interface.</p></div></div>
+      </div>
+    </section>
+
+    <section class="closing"><div class="shell closing-inside"><div><span class="section-index">[ THE GOAL ]</span><h2>An assistant that can<br /><em>carry context forward.</em></h2><p>Project Aoi is a personal learning project built one working piece at a time.</p></div><a class="primary" href="https://github.com/theARRKproject/project-aoi">Explore the repository <span aria-hidden="true">↗</span></a></div></section>
+  </main>
+  <footer><div class="shell footer-inner"><span>PROJECT AOI <span class="footer-sep">/</span> PERSONAL AI EXPERIMENT</span><span>Built in Python. Still in progress.</span><a href="#top">Back to top ↑</a></div></footer>
+</body>
+</html>
